@@ -67,22 +67,20 @@ BlazeComponent.extendComponent({
         this.$('.js-checklist-item').sortable({
           handle: '.checklist-item-handle',
         });
+      } else if (Meteor.user().hasShowDesktopDragHandles()) {
+        this.$('.js-checklists').sortable({
+          handle: '.checklist-handle',
+        });
+        this.$('.js-checklist-item').sortable({
+          handle: '.checklist-item-handle',
+        });
       } else {
-        if (Meteor.user().hasShowDesktopDragHandles()) {
-          this.$('.js-checklists').sortable({
-            handle: '.checklist-handle',
-          });
-          this.$('.js-checklist-item').sortable({
-            handle: '.checklist-item-handle',
-          });
-        } else {
-          this.$('.js-checklists').sortable({
-            handle: '.checklist-title',
-          });
-          this.$('.js-checklist-item').sortable({
-            handle: '.checklist-item',
-          });
-        }
+        this.$('.js-checklists').sortable({
+          handle: '.checklist-title',
+        });
+        this.$('.js-checklist-item').sortable({
+          handle: '.checklist-item',
+        });
       }
     });
   },

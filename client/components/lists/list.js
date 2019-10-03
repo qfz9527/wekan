@@ -35,16 +35,14 @@ BlazeComponent.extendComponent({
       this.$('.js-minicards').sortable({
         handle: '.handle',
       });
+    } else if (Meteor.user().hasShowDesktopDragHandles()) {
+      this.$('.js-minicards').sortable({
+        handle: '.handle',
+      });
     } else {
-      if (Meteor.user().hasShowDesktopDragHandles()) {
-        this.$('.js-minicards').sortable({
-          handle: '.handle',
-        });
-      } else {
-        this.$('.js-minicards').sortable({
-          handle: '.minicard-title',
-        });
-      }
+      this.$('.js-minicards').sortable({
+        handle: '.minicard-title',
+      });
     }
 
     $cards.sortable({
@@ -140,16 +138,14 @@ BlazeComponent.extendComponent({
         this.$('.js-minicards').sortable({
           handle: '.handle',
         });
+      } else if (Meteor.user().hasShowDesktopDragHandles()) {
+        this.$('.js-minicards').sortable({
+          handle: '.handle',
+        });
       } else {
-        if (Meteor.user().hasShowDesktopDragHandles()) {
-          this.$('.js-minicards').sortable({
-            handle: '.handle',
-          });
-        } else {
-          this.$('.js-minicards').sortable({
-            handle: '.minicard-title',
-          });
-        }
+        this.$('.js-minicards').sortable({
+          handle: '.minicard-title',
+        });
       }
     });
 

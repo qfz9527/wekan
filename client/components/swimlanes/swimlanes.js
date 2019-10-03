@@ -117,22 +117,20 @@ function initSortable(boardComponent, $listsDom) {
       this.$('.js-swimlanes').sortable({
         handle: '.swimlane-header-menu-miniscreen-handle',
       });
+    } else if (Meteor.user().hasShowDesktopDragHandles()) {
+      this.$('.js-lists').sortable({
+        handle: '.list-header-menu-handle',
+      });
+      this.$('.js-swimlanes').sortable({
+        handle: '.swimlane-header-menu-handle',
+      });
     } else {
-      if (Meteor.user().hasShowDesktopDragHandles()) {
-        this.$('.js-lists').sortable({
-          handle: '.list-header-menu-handle',
-        });
-        this.$('.js-swimlanes').sortable({
-          handle: '.swimlane-header-menu-handle',
-        });
-      } else {
-        this.$('.js-lists').sortable({
-          handle: '.list-header',
-        });
-        this.$('.js-swimlanes').sortable({
-          handle: '.swimlane-header',
-        });
-      }
+      this.$('.js-lists').sortable({
+        handle: '.list-header',
+      });
+      this.$('.js-swimlanes').sortable({
+        handle: '.swimlane-header',
+      });
     }
   });
 }
