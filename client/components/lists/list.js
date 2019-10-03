@@ -32,9 +32,19 @@ BlazeComponent.extendComponent({
     const $cards = this.$('.js-minicards');
 
     if (Utils.isMiniScreen()) {
-      $('.js-minicards').sortable({
+      this.$('.js-minicards').sortable({
         handle: '.handle',
       });
+    } else {
+      if (Meteor.user().hasShowDesktopDragHandles()) {
+        this.$('.js-minicards').sortable({
+          handle: '.handle',
+        });
+      } else {
+        this.$('.js-minicards').sortable({
+          handle: '.minicard-title',
+        });
+      }
     }
 
     $cards.sortable({
