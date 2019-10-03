@@ -39,7 +39,6 @@ function initSorting(items) {
 
   // ugly touch event hotfix
   enableClickOnTouch('.js-checklist-item:not(.placeholder)');
-
 }
 
 BlazeComponent.extendComponent({
@@ -61,7 +60,7 @@ BlazeComponent.extendComponent({
       if ($itemsDom.data('sortable')) {
         $(self.itemsDom).sortable('option', 'disabled', !userIsMember());
       }
-      if(Utils.isMiniScreen()) {
+      if (Utils.isMiniScreen()) {
         this.$('.js-checklists').sortable({
           handle: '.checklist-handle',
         });

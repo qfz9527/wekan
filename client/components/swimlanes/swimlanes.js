@@ -102,7 +102,6 @@ function initSortable(boardComponent, $listsDom) {
   boardComponent.autorun(() => {
     const $listDom = $listsDom;
 
-
     if ($listDom.data('sortable')) {
       $listsDom.sortable(
         'option',
@@ -110,7 +109,6 @@ function initSortable(boardComponent, $listsDom) {
         MultiSelection.isActive() || !userIsMember(),
       );
     }
-
 
     if (Utils.isMiniScreen()) {
       this.$('.js-lists').sortable({
@@ -136,7 +134,6 @@ function initSortable(boardComponent, $listsDom) {
         });
       }
     }
-
   });
 }
 
