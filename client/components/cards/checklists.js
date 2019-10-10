@@ -1,7 +1,6 @@
 const { calculateIndexData, enableClickOnTouch } = Utils;
 
 function initSorting(items) {
-
   if (Utils.isMiniScreen()) {
     this.$('.js-checklists').sortable({
       handle: '.checklist-handle',
@@ -124,7 +123,7 @@ Template.checklistDetail.helpers({
   },
   isMiniScreen() {
     return Utils.isMiniScreen();
-  }
+  },
 });
 
 BlazeComponent.extendComponent({
@@ -258,7 +257,7 @@ Template.checklists.helpers({
   },
   isMiniScreen() {
     return Utils.isMiniScreen();
-  }
+  },
 });
 
 Template.checklistDeleteDialog.onCreated(() => {
