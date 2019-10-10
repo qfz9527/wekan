@@ -256,6 +256,9 @@ Template.checklists.helpers({
   showDesktopDragHandles() {
     return Meteor.user().hasShowDesktopDragHandles();
   },
+  isMiniScreen() {
+    return Utils.isMiniScreen();
+  }
 });
 
 Template.checklistDeleteDialog.onCreated(() => {
