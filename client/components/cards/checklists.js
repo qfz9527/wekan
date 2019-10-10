@@ -6,21 +6,21 @@ function initSorting(items) {
     this.$('.js-checklists').sortable({
       handle: '.checklist-handle',
     });
-    this.$('.js-checklist-item').sortable({
+    this.$('.js-checklist-items').sortable({
       handle: '.checklist-item-handle',
     });
   } else if (Meteor.user().hasShowDesktopDragHandles()) {
     this.$('.js-checklists').sortable({
       handle: '.checklist-handle',
     });
-    this.$('.js-checklist-item').sortable({
+    this.$('.js-checklist-items').sortable({
       handle: '.checklist-item-handle',
     });
   } else {
     this.$('.js-checklists').sortable({
       handle: '.checklist-title',
     });
-    this.$('.js-checklist-item').sortable({
+    this.$('.js-checklist-items').sortable({
       handle: '.checklist-item',
     });
   }
@@ -88,21 +88,21 @@ BlazeComponent.extendComponent({
         this.$('.js-checklists').sortable({
           handle: '.checklist-handle',
         });
-        this.$('.js-checklist-item').sortable({
+        this.$('.js-checklist-items').sortable({
           handle: '.checklist-item-handle',
         });
       } else if (Meteor.user().hasShowDesktopDragHandles()) {
         this.$('.js-checklists').sortable({
           handle: '.checklist-handle',
         });
-        this.$('.js-checklist-item').sortable({
+        this.$('.js-checklist-items').sortable({
           handle: '.checklist-item-handle',
         });
       } else {
         this.$('.js-checklists').sortable({
           handle: '.checklist-title',
         });
-        this.$('.js-checklist-item').sortable({
+        this.$('.js-checklist-items').sortable({
           handle: '.checklist-item',
         });
       }
@@ -122,6 +122,9 @@ Template.checklistDetail.helpers({
   showDesktopDragHandles() {
     return Meteor.user().hasShowDesktopDragHandles();
   },
+  isMiniScreen() {
+    return Utils.isMiniScreen();
+  }
 });
 
 BlazeComponent.extendComponent({
@@ -291,6 +294,9 @@ Template.checklistItemDetail.helpers({
   },
   showDesktopDragHandles() {
     return Meteor.user().hasShowDesktopDragHandles();
+  },
+  isMiniScreen() {
+    return Utils.isMiniScreen();
   },
 });
 
