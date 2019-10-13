@@ -1,0 +1,92 @@
+version: '2'
+
+services:
+  torodb-stampede:
+    image: registry.cn-shanghai.aliyuncs.com/yili-private/stampede
+    networks:
+      app_net:
+        ipv4_address: 172.16.1.10
+    environment:
+      - POSTGRES_PASSWORD
+      - TORODB_SETUP=false
+      - TORODB_SYNC_SOURCE=mongodb:27017
+      - TORODB_BACKEND=mysql
+      - TORODB_BACKEND_HOST=172.16.1.11
+      - TORODB_BACKEND_PORT=3306
+      - TORODB_BACKEND_DATABASE
+      - TORODB_BACKEND_USER=root
+      - TORODB_BACKEND_PASSWORD=9802179527
+      - DEBUG
+    entrypoint:
+      - /bin/bash
+      - "-c"
+      - sleep 10;
+        /maven/bin/entry-point torodb-stampede --backend mysql
+  mysql:
+    image: daocloud.io/mysql:5.7
+    networks:
+      app_net:
+        ipv4_address: 172.16.1.11
+    ports:
+      - "3306:3306"
+    volumes:
+      - D:/www/mysqldata:/var/lib/mysql
+    command: --innodb-use-native-aio=0
+    environment:
+      - MYSQL_ROOT_PASSWORD=9802179527
+  mongodb:
+    image: mongo:3.2
+    networks:
+      app_net:
+        ipv4_address: 172.16.1.12
+    ports:
+      - "27017:27017"
+    entrypoint:
+      - /bin/bash
+      - "-c"
+      - mongo --nodb --eval '
+            var db;
+            while (!db) {
+                try {
+                  db = new Mongo("172.16.1.12:27017").getDB("local");
+                } catch(ex) {}
+                sleep(3000);
+            };
+            rs.initiate({_id:"rs1",members:[{_id:0,host:"172.16.1.12:27017"}]});
+        ' 1>/dev/null 2>&1 &
+        mongod --replSet rs1
+  wekan:
+    image: quay.io/wekan/wekan
+    networks:
+      app_net:
+        ipv4_address: 172.16.1.13
+    restart: always
+    ports:
+      - 80:8080
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/wekan
+      - ROOT_URL=http://localhost
+      - MAIL_URL=smtp://user:pass@mailserver.example.com:25/
+      - MAIL_FROM='Example Wekan Support <support@example.com>'
+      - WITH_API=true
+      - RICHER_CARD_COMMENT_EDITOR=true
+      - CARD_OPENED_WEBHOOK_ENABLED=false
+      - BIGEVENTS_PATTERN=NONE
+      - BROWSER_POLICY_ENABLED=true
+      - LDAP_BACKGROUND_SYNC_INTERVAL=''
+volumes:
+  mongodb:
+    driver: local
+  mongodb-dump:
+    driver: local
+
+networks:
+  app_net:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "false"
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.1.0/24
+          gateway: 172.16.1.1
